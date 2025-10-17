@@ -15,4 +15,5 @@ export interface SectionResponse {
         draugiem: string
     },
     description: string,
+    lang: string
 }

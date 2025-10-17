@@ -1,5 +1,4 @@
 import { useApi } from './useApi'
-import { computed, onMounted } from 'vue'
 import placeholder from '../assets/images/placeholder.jpg'
 import placeholder1 from '../assets/images/placeholder1.jpg'
 import placeholder2 from '../assets/images/placeholder2.jpg'
@@ -11,31 +10,47 @@ const fallbackArticles: Article[] = [
         title: 'Preview Article 1',
         image: placeholder,
         link: 'https://www.tvnet.lv/',
-        date: new Date().toISOString(),
-        authors: ['Marcis']
+        date: (() => {
+            const date = new Date()
+            date.setUTCHours(date.getUTCHours() + 3)
+            return date.toUTCString()
+        })(),
+        authors: ['marcis']
     },
     {
         id: 2,
         title: 'Preview Article 2',
         image: placeholder1,
         link: 'https://www.tvnet.lv/',
-        date: new Date().toISOString(),
-        authors: ['Marcis']
+        date: (() => {
+            const date = new Date()
+            date.setUTCHours(date.getUTCHours() + 3)
+            return date.toUTCString()
+        })(),
+        authors: ['marcis']
     },
     {
         id: 3,
         title: 'Preview Article 3',
         image: placeholder2,
         link: 'https://www.tvnet.lv/',
-        date: new Date().toISOString(),
-        authors: ['Marcis']
+        date: (() => {
+            const date = new Date()
+            date.setUTCHours(date.getUTCHours() + 3)
+            return date.toUTCString()
+        })(),
+        authors: ['marcis']
     }
 ]
 
 export const useArticles = () => {
-    const { data, fetchData } = useApi<Article[]>(
+    const { data, error, fetchData } = useApi<Article[]>(
         '/api/articles',
         (articles: any[]): Article[] => {
+            if (!articles || !Array.isArray(articles)) {
+                return [];
+            }
+
             return articles.map((article) => ({
                 id: article.id,
                 title: article.headline,
@@ -44,10 +59,10 @@ export const useArticles = () => {
                     || placeholder,
                 link: `https://tvnet.lv/${article.id}/${article.slug}`,
                 date: article.datePublished,
-                authors: article.authors?.[0]?.map((author: { name: string }) => author.name) || []
-            }))
+                authors: article.authors?.map((author: { name: string }) => author.name) || []
+            }));
         }
-    )
+    );
 
     const errorDescription = computed(() => {
         if (!data.value?.length) {
@@ -56,6 +71,7 @@ export const useArticles = () => {
         return ''
     })
 
+
     const articles = computed<Article[]>(() => {
         if (!data.value?.length) {
             return fallbackArticles
@@ -63,10 +79,5 @@ export const useArticles = () => {
         return data.value.slice(0, 5)
     })
 
-    onMounted(async () => {
-        await fetchData()
-        console.log('Fetched articles:', data.value)
-    })
-
-    return { articles, errorDescription }
+    return { articles, error, errorDescription, fetchData }
 }

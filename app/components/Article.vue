@@ -1,6 +1,6 @@
 <script lang = "ts" setup>
 import type { Article } from "../assets/types/Article";
-import { defineProps, ref, onMounted, computed } from 'vue';
+import { ref, onMounted, computed } from 'vue';
 
 const props = defineProps<{
     article: Article,
@@ -44,6 +44,7 @@ const formattedDate = computed(() => {
         hour12: false
     })
 })
+
 </script>
 
 <template>
@@ -58,18 +59,22 @@ const formattedDate = computed(() => {
             </a>
         </figure>
         <article class="article-info">
-            <span class="article-number">
-                {{ props.index + 1 < 10 ? '0' + (props.index + 1) : props.index + 1 }}
-            </span>
-            <h2 class="article-title">
-                <a :href="props.article.link" target="_blank" rel="noopener noreferrer">
-                    {{ props.article.title }}
-                </a>
-            </h2>
-            <span class="article-date">{{ formattedDate }}</span>
-            <p v-if="props.article.authors?.length" class="article-authors">
-                By {{ props.article.authors.join(', ') }}
-            </p>
+            <div class="article-header">
+                <span class="article-number">
+                    {{ props.index + 1 < 10 ? '0' + (props.index + 1) : props.index + 1 }}
+                </span>
+                <h2 class="article-title">
+                    <a :href="props.article.link" target="_blank" rel="noopener noreferrer">
+                        {{ props.article.title }}
+                    </a>
+                </h2>
+            </div>
+            <div class="article-meta">
+                <span class="article-date">{{ formattedDate }}</span>
+                <p v-if="props.article.authors?.length" class="article-authors">
+                    By {{ props.article.authors.join(', ') }}
+                </p>
+            </div>
         </article>
     </section>
 </template>
@@ -87,6 +92,17 @@ const formattedDate = computed(() => {
     opacity: 0;
     transform: translateY(50px);
     transition: all 0.6s ease-out;
+}
+
+.article-header {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.article-meta {
+    text-align: center;
 }
 
 .article.reverse {
@@ -175,6 +191,10 @@ a {
         flex-direction: column-reverse;
     }
 
+    .article-header {
+        flex-direction: row;
+    }
+
     .article-image-container {
         width: 100%;
         height: 200px;
@@ -193,10 +213,17 @@ a {
 
     .article-info {
         width: 100%;
-        flex-direction: row;
+        flex-direction: column;
         justify-content: space-between;
         align-items: center;
         gap: 0.5rem;
+    }
+
+    .article-meta {
+        display: flex;
+        flex-direction: row;
+        text-align: center;
+        gap: 8px;
     }
 
     .article-number {

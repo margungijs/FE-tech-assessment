@@ -19,4 +19,5 @@ export const useSection = () =>
             draugiem: data.meta.social.draugiem,
         },
         description: data.description,
+        lang: data.language,
     }));

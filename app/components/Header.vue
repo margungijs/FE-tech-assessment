@@ -9,8 +9,14 @@ const props = defineProps<{
 </script>
 
 <template>
-    <header class="header" :style="{ backgroundColor: props.bgColor || '#FF5501' }">
-        <img class = "logo" :src="props.logo" alt="Logo">
+    <header class="header" :style="{ backgroundColor: props.bgColor }">
+        <img
+            class="logo"
+            :src="props.logo"
+            alt="Logo"
+            width="200"
+            height="60"
+        />
         <nav class="nav">
             <NuxtLink to="/">Home</NuxtLink>
             <NuxtLink to="/about">About</NuxtLink>

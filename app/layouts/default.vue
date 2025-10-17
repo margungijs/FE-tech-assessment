@@ -28,6 +28,9 @@ const logoToUse = computed(() =>
 
 useHead({
     title: sectionData.value?.titleBar || 'Default title',
+    htmlAttrs: {
+        lang: sectionData.value?.lang || 'en'
+    },
     link: [
         {
             rel: 'icon',

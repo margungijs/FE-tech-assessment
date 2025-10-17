@@ -1,12 +1,13 @@
 <script setup lang="ts">
-import { ref, defineExpose, computed } from 'vue'
+import { ref, defineExpose, computed, onMounted } from 'vue'
 import type { Article } from "../assets/types/Article";
 import { useArticles } from "../composables/useArticles";
 
 const sectionEl = ref<HTMLElement | null>(null)
 defineExpose({ sectionEl })
 
-const { articles, errorDescription } = useArticles()
+const { articles, errorDescription, fetchData } = useArticles();
+await fetchData();
 
 </script>
 
@@ -34,12 +35,6 @@ const { articles, errorDescription } = useArticles()
     width: 100%;
     box-sizing: border-box;
     overflow-x: hidden;
-}
-
-.articles-loading {
-    text-align: center;
-    color: #555;
-    font-size: 1.1rem;
 }
 
 .articles-error {
