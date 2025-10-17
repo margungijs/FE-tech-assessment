@@ -1,7 +1,6 @@
 <script lang="ts" setup>
-import { ref, onMounted, onUnmounted, computed } from 'vue'
 import { useSection } from '../composables/useSection'
-import { useHead } from 'nuxt/app'
+import defaultLogo from '../assets/images/placeholder-logo.jpg'
 
 const { data: sectionData, fetchData } = useSection()
 await fetchData()
@@ -21,9 +20,11 @@ onUnmounted(() => {
 })
 
 const logoToUse = computed(() =>
-    isMobile.value
-        ? sectionData.value?.logos.small
-        : sectionData.value?.logos.darkBg
+    sectionData.value
+        ? isMobile.value
+            ? sectionData.value.logos.small
+            : sectionData.value.logos.darkBg
+        : defaultLogo
 )
 
 useHead({
@@ -35,7 +36,7 @@ useHead({
         {
             rel: 'icon',
             type: 'image/png',
-            href: sectionData.value?.logos.favicon
+            href: sectionData.value?.logos.favicon || defaultLogo
         },
         { rel: 'preload', as: 'image', href: logoToUse.value || '' }
     ]

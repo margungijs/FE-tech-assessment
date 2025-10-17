@@ -1,6 +1,5 @@
 <script lang = "ts" setup>
 import type { Article } from "../assets/types/Article";
-import { ref, onMounted, computed } from 'vue';
 
 const props = defineProps<{
     article: Article,
@@ -9,25 +8,30 @@ const props = defineProps<{
 
 const articleRef = ref<HTMLElement | null>(null);
 const isVisible = ref(false);
+const observer = ref<IntersectionObserver | null>(null);
 
 //Could be moved to composables if its reused, but since its only used for articles
-//I left it in the component itself
+// I left it in the component itself
 onMounted(() => {
     if (!articleRef.value) return;
 
-    const observer = new IntersectionObserver(
+    observer.value = new IntersectionObserver(
         (entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     isVisible.value = true;
-                    observer.unobserve(entry.target);
+                    observer.value?.unobserve(entry.target);
                 }
             });
         },
         { threshold: 0.2 }
     );
 
-    observer.observe(articleRef.value);
+    observer.value.observe(articleRef.value);
+});
+
+onUnmounted(() => {
+    observer.value?.disconnect();
 });
 
 //Could be moved to composables if its reused, but since its only used for article date formatting
@@ -44,7 +48,6 @@ const formattedDate = computed(() => {
         hour12: false
     })
 })
-
 </script>
 
 <template>

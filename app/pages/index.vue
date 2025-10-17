@@ -1,7 +1,4 @@
-<script setup lang="ts">
-import { ref } from 'vue'
-import placeholderImg from '~/assets/images/placeholder.jpg'
-
+<script lang="ts" setup>
 const articleListRef = ref<any>(null)
 
 const scrollToArticles = () => {
@@ -9,11 +6,6 @@ const scrollToArticles = () => {
         articleListRef.value.sectionEl.scrollIntoView({ behavior: 'smooth' })
     }
 }
-
-const articles = [
-    { id: 1, title: 'First Article', image: placeholderImg, number: 1 },
-    { id: 2, title: 'Second Article', image: placeholderImg, number: 2 },
-]
 </script>
 
 <template>
@@ -21,7 +13,6 @@ const articles = [
         <Landing @scrollToArticles="scrollToArticles"/>
         <ArticleList
             ref="articleListRef"
-            :articles="articles"
         />
     </div>
 </template>

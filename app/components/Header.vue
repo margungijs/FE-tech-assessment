@@ -1,5 +1,4 @@
 <script lang = "ts" setup>
-import { defineProps } from 'vue';
 
 const props = defineProps<{
     logo?: string,
@@ -9,13 +8,12 @@ const props = defineProps<{
 </script>
 
 <template>
-    <header class="header" :style="{ backgroundColor: props.bgColor }">
+    <header class="header" :style="{ backgroundColor: props.bgColor || '#FF5500' }">
         <img
             class="logo"
             :src="props.logo"
             alt="Logo"
-            width="200"
-            height="60"
+            fetchpriority="high"
         />
         <nav class="nav">
             <NuxtLink to="/">Home</NuxtLink>

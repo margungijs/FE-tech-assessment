@@ -9,6 +9,7 @@ export const useApi = <T>(
         const { data: fetched, error: fetchError } = await useFetch(endpoint)
 
         if (fetchError.value) {
+            error.value = fetchError.value
             console.error('Fetch error:', fetchError.value)
         }
 

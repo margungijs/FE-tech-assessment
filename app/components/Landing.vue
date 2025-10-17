@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { defineEmits } from 'vue'
 
 const emit = defineEmits([
     'scrollToArticles'
@@ -8,7 +7,11 @@ const emit = defineEmits([
 
 <template>
     <section class="landing">
-        <button class="go-button" @click="emit('scrollToArticles')">
+        <button
+            class="go-button"
+            @click="emit('scrollToArticles')"
+            aria-label="Scroll to the Articles section"
+        >
             Go to Articles
         </button>
     </section>

@@ -6,14 +6,5 @@ export interface SectionResponse {
         small: string
     }
     color: string,
-    socials: {
-        facebook: string,
-        youtube: string,
-        tiktok: string,
-        instagram: string,
-        twitter: string,
-        draugiem: string
-    },
-    description: string,
     lang: string
 }

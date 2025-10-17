@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { ref, defineExpose, computed, onMounted } from 'vue'
 import type { Article } from "../assets/types/Article";
 import { useArticles } from "../composables/useArticles";
 
