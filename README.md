@@ -1,6 +1,9 @@
-# Nuxt Minimal Starter
+# FE Technical assessment 
 
-Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+This web page fetches and displays 5 articles from a REST API.
+### Notes:
+
+During development, the articles API occasionally returned 404 - Service not found. I created a fallback which ensures that the page still displays fallback content when this happens.
 
 ## Setup
 
